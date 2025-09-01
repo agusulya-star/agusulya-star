@@ -2,7 +2,7 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Selamat Ulang Tahun 💖</title>
     <style>
       body {
@@ -114,96 +114,105 @@
     </div>
 
     <script>
-      const CONFIG = {
-        nama: "Riskaa",
-        pesan: "Semoga semua doa baikmu terkabul.",
-        jumlahAwal: 40,
-      };
-      document.getElementById("nama").textContent = CONFIG.nama;
-      document.getElementById("pesan").textContent = CONFIG.pesan;
+      document.addEventListener("DOMContentLoaded", () => {
+        const CONFIG = {
+          nama: "Riskaa",
+          pesan: "Semoga semua doa baikmu terkabul.",
+          jumlahAwal: 40,
+        };
+        document.getElementById("nama").textContent = CONFIG.nama;
+        document.getElementById("pesan").textContent = CONFIG.pesan;
 
-      const canvas = document.getElementById("hearts");
-      const ctx = canvas.getContext("2d");
-      let W = (canvas.width = window.innerWidth);
-      let H = (canvas.height = window.innerHeight);
+        const canvas = document.getElementById("hearts");
+        const ctx = canvas.getContext("2d");
+        let W = (canvas.width = window.innerWidth);
+        let H = (canvas.height = window.innerHeight);
 
-      window.addEventListener("resize", () => {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-      });
-
-      const fotoList = [
-        "riska.jpeg",
-        "riska2.jpeg",
-        "riska3.jpeg",
-        "riska4.jpeg",
-      ];
-      let fotoImages = [];
-      fotoList.forEach((src) => {
-        let img = new Image();
-        img.src = src;
-        fotoImages.push(img);
-      });
-
-      function drawHeart(x, y, size, img) {
-        ctx.save();
-        ctx.beginPath();
-        for (let t = 0; t < Math.PI * 2; t += 0.01) {
-          let sx = 16 * Math.pow(Math.sin(t), 3);
-          let sy = -(
-            13 * Math.cos(t) -
-            5 * Math.cos(2 * t) -
-            2 * Math.cos(3 * t) -
-            Math.cos(4 * t)
-          );
-          ctx.lineTo(x + sx * size, y + sy * size);
-        }
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(img, x - size * 20, y - size * 20, size * 40, size * 40);
-        ctx.restore();
-      }
-
-      class Heart {
-        constructor() {
-          this.reset();
-          this.img = fotoImages[Math.floor(Math.random() * fotoImages.length)];
-        }
-        reset() {
-          this.x = Math.random() * W;
-          this.y = H + 20;
-          this.size = 0.3 + Math.random() * 0.1;
-          this.vy = 0.8 + Math.random() * 1.2;
-        }
-        update() {
-          this.y -= this.vy;
-          if (this.y < -20) this.reset();
-        }
-        render() {
-          drawHeart(this.x, this.y, this.size * 7, this.img);
-        }
-      }
-
-      const hearts = Array.from(
-        { length: CONFIG.jumlahAwal },
-        () => new Heart()
-      );
-      function loop() {
-        ctx.clearRect(0, 0, W, H);
-        hearts.forEach((h) => {
-          h.update();
-          h.render();
+        window.addEventListener("resize", () => {
+          W = canvas.width = window.innerWidth;
+          H = canvas.height = window.innerHeight;
         });
-        requestAnimationFrame(loop);
-      }
-      requestAnimationFrame(loop);
 
-      // Event listener tombol Lanjut
-      document.getElementById("btnLanjut").addEventListener("click", () => {
-        alert(
-          "✨🎀 Selamat ulang tahun Riskaaa! 🎀✨Hari ini adalah hari spesialmu, hari di mana kamu dilahirkan. Semoga setiap detik di hari ulang tahunmu dipenuhi tawa, senyum manis, dan momen-momen yang membuat hatimu berbunga-bunga. 🌸💖Semoga kamu selalu sehat, cantikkkkkkk, dan dikelilingi oleh orang-orang yang menyayangimu. 🌈✨Terima kasih telah menjadi sosok yang lembut, hangat, dan juga terimaksiiii karena telah membuat hari hari yaang membosankan ini menjadi berwarna walau kadang ngeselin. Semoga tahun ini membawa petualangan seru, kejutan manis, dan kenangan yang selalu membuatmu tersenyum. 🎁💐🎉ingattt olahraga (Minimal 5x naik turun tangga lantai 3)dan kurangin minum yang manis manis karena kamu dah manissss. 🌟Selamat ulang tahunnnnn🦋💝🥳!"
+        const fotoList = [
+          "riska.jpeg",
+          "riska2.jpeg",
+          "riska3.jpeg",
+          "riska4.jpeg",
+        ];
+        let fotoImages = [];
+        fotoList.forEach((src) => {
+          let img = new Image();
+          img.src = src;
+          fotoImages.push(img);
+        });
+
+        function drawHeart(x, y, size, img) {
+          ctx.save();
+          ctx.beginPath();
+          for (let t = 0; t < Math.PI * 2; t += 0.01) {
+            let sx = 16 * Math.pow(Math.sin(t), 3);
+            let sy = -(
+              13 * Math.cos(t) -
+              5 * Math.cos(2 * t) -
+              2 * Math.cos(3 * t) -
+              Math.cos(4 * t)
+            );
+            ctx.lineTo(x + sx * size, y + sy * size);
+          }
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(
+            img,
+            x - size * 20,
+            y - size * 20,
+            size * 40,
+            size * 40
+          );
+          ctx.restore();
+        }
+
+        class Heart {
+          constructor() {
+            this.reset();
+            this.img =
+              fotoImages[Math.floor(Math.random() * fotoImages.length)];
+          }
+          reset() {
+            this.x = Math.random() * W;
+            this.y = H + 20;
+            this.size = 0.3 + Math.random() * 0.1;
+            this.vy = 0.8 + Math.random() * 1.2;
+          }
+          update() {
+            this.y -= this.vy;
+            if (this.y < -20) this.reset();
+          }
+          render() {
+            drawHeart(this.x, this.y, this.size * 7, this.img);
+          }
+        }
+
+        const hearts = Array.from(
+          { length: CONFIG.jumlahAwal },
+          () => new Heart()
         );
-        // Ganti fungsi ini sesuai kebutuhan, misal navigasi halaman lain
+        function loop() {
+          ctx.clearRect(0, 0, W, H);
+          hearts.forEach((h) => {
+            h.update();
+            h.render();
+          });
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+
+        // Event listener tombol Lanjut
+        document.getElementById("btnLanjut").addEventListener("click", () => {
+          alert(
+            "✨🎀 Selamat ulang tahun Riskaaa! 🎀✨Hari ini adalah hari spesialmu, hari di mana kamu dilahirkan. Semoga setiap detik di hari ulang tahunmu dipenuhi tawa, senyum manis, dan momen-momen yang membuat hatimu berbunga-bunga. 🌸💖Semoga kamu selalu sehat, cantikkkkkkk, dan dikelilingi oleh orang-orang yang menyayangimu. 🌈✨Terima kasih telah menjadi sosok yang lembut, hangat, dan juga terimaksiiii karena telah membuat hari hari yaang membosankan ini menjadi berwarna walau kadang ngeselin. Semoga tahun ini membawa petualangan seru, kejutan manis, dan kenangan yang selalu membuatmu tersenyum. 🎁💐🎉ingattt olahraga (Minimal 5x naik turun tangga lantai 3)dan kurangin minum yang manis manis karena kamu dah manissss. 🌟Selamat ulang tahunnnnn🦋💝🥳!"
+          );
+          // Ganti fungsi ini sesuai kebutuhan, misal navigasi halaman lain
+        });
       });
     </script>
   </body>
